@@ -52,12 +52,12 @@ public class UsbModeChooserActivity extends Activity {
         CharSequence[] items;
         if (isFileTransferRestricted) {
             items = new CharSequence[] { getText(R.string.usb_use_charging_only), getText(R.string.usb_use_MIDI)};
-            mFunctions = new String[] { null, UsbManager.USB_FUNCTION_MIDI };
+            mFunctions = new String[] { UsbManager.USB_FUNCTION_NONE, UsbManager.USB_FUNCTION_MIDI };
         } else {
             items = new CharSequence[] {
                     getText(R.string.usb_use_charging_only), getText(R.string.usb_use_file_transfers),
                     getText(R.string.usb_use_photo_transfers), getText(R.string.usb_use_MIDI)};
-            mFunctions = new String[] { null, UsbManager.USB_FUNCTION_MTP,
+            mFunctions = new String[] { UsbManager.USB_FUNCTION_NONE, UsbManager.USB_FUNCTION_MTP,
                     UsbManager.USB_FUNCTION_PTP, UsbManager.USB_FUNCTION_MIDI };
         }
 
@@ -106,12 +106,6 @@ public class UsbModeChooserActivity extends Activity {
     }
 
     private void setCurrentFunction(int which) {
-        if (which == 0) {
-            mUsbManager.setCurrentFunction(null);
-            mUsbManager.setUsbDataUnlocked(false);
-            return;
-        }
-
         mUsbManager.setCurrentFunction(mFunctions[which]);
         mUsbManager.setUsbDataUnlocked(true);
     }
